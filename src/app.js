@@ -1,4 +1,6 @@
 const express = require('express');
+// const apiRoutes = require('./Routes');
+const loginController = require('./controllers/login');
 
 // ...
 
@@ -10,6 +12,10 @@ app.get('/', (_request, response) => {
 });
 
 app.use(express.json());
+
+app.post('/login', loginController);
+
+// app.use('/login', apiRoutes);
 
 // ...
 
