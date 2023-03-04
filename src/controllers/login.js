@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 
     const token = jwt.sign({ payload: userNoPass }, secret, { algorithm: 'HS256' });
 
-    return res.status(200).json({ user: user.email, token });
+    return res.status(200).json({ token });
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: 'internal error', error: e.message });
