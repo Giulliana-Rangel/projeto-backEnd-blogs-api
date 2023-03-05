@@ -20,6 +20,7 @@ app.post('/login', loginController);
 app.post('/user',
  validateDisplayName, validateEmail, validatePassword, userController.createNewUser);
 app.get('/user', validateToken, userController.getAllUsers);
+app.get('/user/:id', validateToken, userController.getUserById);
 
 // app.use('/login', apiRoutes);
 
