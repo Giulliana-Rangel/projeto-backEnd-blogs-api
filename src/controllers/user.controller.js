@@ -2,10 +2,6 @@ const jwt = require('jsonwebtoken');
 const userService = require('../services/User.service');
 
 const secret = process.env.JWT_SECRET;
-// const jwtConfig = {
-//   expiresIn: '10d',
-//   algorithm: 'HS256',
-// };
 
 const createNewUser = async (req, res) => {
   const { authorization } = req.headers;
@@ -17,7 +13,7 @@ const createNewUser = async (req, res) => {
   }
   
   const payload = jwt.verify(authorization, secret);
-  console.log(payload);
+  // console.log(payload);
   
    await userService.createNewUser({
     displayName,
@@ -30,15 +26,20 @@ const createNewUser = async (req, res) => {
   return res.status(201).json({ authorization });
 };
 
-// const createNewUser = async (req, res) => {
-//   const { displayName, email, password, image } = req.body;
+ const getAllUsers = async (_req, res) => {
+   try {
+    const allUsers = await userService.getAllUsers();
+    if (!allUsers) throw Error;
+    res.status(200).json(allUsers);
+  } catch (err) {
+    res.status(500).json({
+      message: 'internal error',
+      error: err.message,
+    });
+  }
+  };
 
-//   const response = await userService.createNewUser(displayName, email, password, image);
-
-//   const newUserId = response.dataValues.id;
-//   const token = jwt.sign({ data: { userId: newUserId } }, secret, jwtConfig);
-//   res.status(201).send({ token });
-// };
 module.exports = {
   createNewUser,
+  getAllUsers,
 };
