@@ -1,10 +1,7 @@
-const jwt = require('jsonwebtoken');
 const userService = require('../services/User.service');
-
-const secret = process.env.JWT_SECRET;
+const { createToken } = require('../auth/auth');
 
 const createNewUser = async (req, res) => {
-  const { authorization } = req.headers;
   const { displayName, email, password, image } = req.body;
   
   const hasEmail = await userService.checkEmail(email);
@@ -12,7 +9,7 @@ const createNewUser = async (req, res) => {
     return res.status(409).json({ message: 'User already registered' });
   }
   
-  const payload = jwt.verify(authorization, secret);
+  const payload = createToken({ displayName, email });
   // console.log(payload);
   
    await userService.createNewUser({
@@ -23,7 +20,7 @@ const createNewUser = async (req, res) => {
     userId: payload.id, 
   });
 
-  return res.status(201).json({ authorization });
+  return res.status(201).json({ token: payload });
 };
 
  const getAllUsers = async (_req, res) => {
