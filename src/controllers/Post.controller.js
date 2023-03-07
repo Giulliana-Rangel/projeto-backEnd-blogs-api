@@ -5,18 +5,23 @@ const categoryService = require('../services/Categories.service');
 const insertPostWithCategory = async (req, res) => {
 // try {
     const { title, content, categoryIds } = req.body;
-    const { userId } = req.user;
+    const { id: userId } = req.payload;
+    console.log(userId);
 
     if (!title || !content || !categoryIds) {
       return res.status(400).json({ message: 'Some required fields are missing' });
     }
-    const hasCategory = await categoryService.getCatById(categoryIds);
-    if (hasCategory !== null) {
+    const arrHasCategory = categoryIds
+      .map(async (categoryId) => categoryService.getCatById(categoryId));
+
+    const hasCategory = await Promise.all(arrHasCategory);
+    
+    if (hasCategory.includes(null)) {
       return res.status(400).json({ message: 'one or more "categoryIds" not found' });
     }
     const post = await postService.insertPost({ title, content, userId, categoryIds });
 
-    return res.status(201).json({ message: post });
+    return res.status(201).json(post);
   // } catch (e) {
   //   return res.status(500).json({ message: 'unexpected error', error: e.message });
   // }

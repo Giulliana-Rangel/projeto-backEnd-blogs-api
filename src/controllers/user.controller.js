@@ -9,17 +9,14 @@ const createNewUser = async (req, res) => {
     return res.status(409).json({ message: 'User already registered' });
   }
   
-  const payload = createToken({ displayName, email });
-  // console.log(payload);
-  
-   await userService.createNewUser({
+  const result = await userService.createNewUser({
     displayName,
     email, 
     password, 
     image,
-    userId: payload.id, 
   });
-
+  
+  const payload = createToken({ displayName, email, id: result.id });
   return res.status(201).json({ token: payload });
 };
 

@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
 
     const { password: _, ...userNoPass } = user.dataValues;
 
-    const token = jwt.sign({ payload: userNoPass }, secret, { algorithm: 'HS256' });
+    const token = jwt.sign(userNoPass, secret, { algorithm: 'HS256' });
 
     return res.status(200).json({ token });
   } catch (e) {
