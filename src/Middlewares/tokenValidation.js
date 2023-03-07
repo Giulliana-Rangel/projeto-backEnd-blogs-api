@@ -7,7 +7,7 @@ const validateToken = async (req, res, next) => {
   } 
   try { 
     const payload = verifyToken(token);
-    console.log(payload);
+    // console.log('tokenValidation', payload);
     req.payload = payload;
     next();
     } catch (error) {

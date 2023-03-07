@@ -6,7 +6,7 @@ const insertPostWithCategory = async (req, res) => {
 // try {
     const { title, content, categoryIds } = req.body;
     const { id: userId } = req.payload;
-    console.log(userId);
+    // console.log(userId);
 
     if (!title || !content || !categoryIds) {
       return res.status(400).json({ message: 'Some required fields are missing' });
@@ -47,8 +47,32 @@ const getPostById = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try { 
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const { id: userId } = req.payload;
+    // console.log('updateController', { title, content, id, userId });
+
+    const byId = await postService.getPostById(id);
+    if (byId.userId !== userId) return res.status(401).json({ message: 'Unauthorized user' });
+
+    if (!title || !content) {
+      return res.status(400).json({ 
+        message: 'Some required fields are missing' }); 
+    }
+    const result = await postService.update({ id, title, content });
+
+    return res.status(200).json(result);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({ message: 'internal error', error: e.message });
+  }
+};
+
 module.exports = {
   insertPostWithCategory,
   getAllPosts,
   getPostById,
+  update,
 };

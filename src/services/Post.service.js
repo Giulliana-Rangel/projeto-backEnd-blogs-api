@@ -33,9 +33,19 @@
     ] });
   return byId;
 };
+
+const update = async ({ id, title, content }) => {
+   // console.log('updateService', { id, title, content });
+  await BlogPost.update({ title, content }, { where: { id } });
+  const byId = await getPostById(id);
+  return byId;
+};
+
   module.exports = {
     insertPost,
     getPostById,
     getAllPosts,
+    update,
+    
   };
   // find = userId && create = others

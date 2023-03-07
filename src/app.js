@@ -31,6 +31,7 @@ app.get('/categories', validateToken, categoriesController.getAllCat);
 app.post('/post', validateToken, postController.insertPostWithCategory);
 app.get('/post', validateToken, postController.getAllPosts);
 app.get('/post/:id', validateToken, postController.getPostById);
+app.put('/post/:id', validateToken, postController.update);
 // app.use('/login', apiRoutes);
 
 // ...
