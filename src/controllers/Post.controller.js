@@ -15,7 +15,7 @@ const insertPostWithCategory = async (req, res) => {
       .map(async (categoryId) => categoryService.getCatById(categoryId));
 
     const hasCategory = await Promise.all(arrHasCategory);
-    
+
     if (hasCategory.includes(null)) {
       return res.status(400).json({ message: 'one or more "categoryIds" not found' });
     }
@@ -40,9 +40,10 @@ const getPostById = async (req, res) => {
   try {
     const { id } = req.params;
     const byId = await postService.getPostById(id);
+    if (!byId) return res.status(404).json({ message: 'Post does not exist' });
     return res.status(200).json(byId);
   } catch (e) {
-    return res.status(404).json({ message: 'Post does not exist', error: e.message });
+    return res.status(500).json({ message: 'internal error', error: e.message });
   }
 };
 
