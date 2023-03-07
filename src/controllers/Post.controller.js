@@ -1,6 +1,6 @@
 const postService = require('../services/Post.service');
 const categoryService = require('../services/Categories.service');
-const userService = require('../services/User.service');
+// const userService = require('../services/User.service');
 
 const insertPostWithCategory = async (req, res) => {
 // try {
