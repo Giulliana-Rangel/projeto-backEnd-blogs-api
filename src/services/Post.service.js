@@ -41,11 +41,17 @@ const update = async ({ id, title, content }) => {
   return byId;
 };
 
+// const removePost = async (id) => {
+//   console.log('servicePostDelete', id);
+//   const rmv = await BlogPost.destroy({ id }, { where: { id } });
+//   return rmv;
+// };
+
   module.exports = {
     insertPost,
     getPostById,
     getAllPosts,
     update,
-    
+    // removePost,
   };
   // find = userId && create = others

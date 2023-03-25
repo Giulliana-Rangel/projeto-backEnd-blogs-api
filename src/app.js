@@ -32,6 +32,7 @@ app.post('/post', validateToken, postController.insertPostWithCategory);
 app.get('/post', validateToken, postController.getAllPosts);
 app.get('/post/:id', validateToken, postController.getPostById);
 app.put('/post/:id', validateToken, postController.update);
+// app.delete('/post/:id', validateToken, postController.removePost);
 // app.use('/login', apiRoutes);
 
 // ...

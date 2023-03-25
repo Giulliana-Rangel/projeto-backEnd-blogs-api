@@ -69,10 +69,28 @@ const update = async (req, res) => {
     return res.status(500).json({ message: 'internal error', error: e.message });
   }
 };
+// const removePost = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { id: userId } = req.payload;
+
+//     const byId = await postService.getPostById(id);
+//     if (byId.userId !== userId) return res.status(401).json({ message: 'Unauthorized user' });
+
+//     if (!byId) return res.status(404).json({ message: 'Post does not exist' });
+
+//     await postService.removePost(id);
+//     return res.status(204).end();
+//   } catch (e) {
+//     console.log(e);
+//     return res.status(500).json({ message: 'internal error', error: e.message });
+// }
+// };
 
 module.exports = {
   insertPostWithCategory,
   getAllPosts,
   getPostById,
   update,
+  removePost,
 };
